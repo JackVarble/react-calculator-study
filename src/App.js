@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.scss";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className="container">
+      <div className="output">
+        <div className="lastEntry"></div>
+        <div className="currentEntry"></div>
+      </div>
+      <button className="spanTwo">AC</button>
+      <button className="spanOne">DEL</button>
+      <button className="spanOne">÷</button>
+      <button className="spanOne">1</button>
+      <button className="spanOne">2</button>
+      <button className="spanOne">3</button>
+      <button className="spanOne">*</button>
+      <button className="spanOne">4</button>
+      <button className="spanOne">5</button>
+      <button className="spanOne">6</button>
+      <button className="spanOne">+</button>
+      <button className="spanOne">7</button>
+      <button className="spanOne">8</button>
+      <button className="spanOne">9</button>
+      <button className="spanOne">.</button>
+      <button className="spanOne">0</button>
+      <button className="spanTwo">=</button>
+    </main>
   );
-}
+};
 
 export default App;
