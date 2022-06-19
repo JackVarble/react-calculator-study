@@ -1,11 +1,11 @@
-import React from "react";
+import { useReducer } from "react";
 import "./App.scss";
 
 const App = () => {
   return (
     <main className="container">
       <div className="output">
-        <div className="lastEntry"></div>
+        <div className="previousEntry"></div>
         <div className="currentEntry"></div>
       </div>
       <button className="spanTwo">AC</button>
@@ -22,6 +22,7 @@ const App = () => {
       <button className="spanOne">7</button>
       <button className="spanOne">8</button>
       <button className="spanOne">9</button>
+      <button className="spanOne">-</button>
       <button className="spanOne">.</button>
       <button className="spanOne">0</button>
       <button className="spanTwo">=</button>

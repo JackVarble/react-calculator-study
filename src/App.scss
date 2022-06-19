@@ -22,14 +22,59 @@ body {
 @mixin shadow {
   box-shadow: -6px -6px 12px #fff, 6px 6px 9px rgba(#000, 0.2);
 }
+@mixin shadow-inset {
+  box-shadow: inset -6px -6px 12px #fff, inset 6px 6px 9px rgba(#000, 0.2);
+}
 
 .container {
   @include shadow;
+  display: grid;
+  margin-top: 2rem;
+  grid-template-columns: repeat(4, 6rem);
+  grid-template-rows: minmax(7rem, auto) repeat(5, 6rem);
   padding: 2rem;
   border-radius: 10px;
 
   .spanOne,
   .spanTwo {
+    @include shadow;
     outline: none;
+    border: none;
+    margin: 0.5rem;
+    border-radius: 30px;
+    cursor: pointer;
+    background-color: #e9e9e9;
+
+    &:hover,
+    &:active {
+      background-color: #dedede;
+    }
+    &:active {
+      @include shadow-inset;
+    }
+  }
+  .spanTwo {
+    grid-column: span 2;
+  }
+  .output {
+    @include shadow-inset();
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    grid-column: 1/-1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-around;
+    padding: 0.75rem;
+    word-wrap: break-word;
+    word-break: break-all;
+
+    .previousEntry {
+      color: rgba(#000, 0.7);
+      font-size: 1rem;
+    }
+    .currentEntry {
+      font-size: 2.5rem;
+    }
   }
 }
