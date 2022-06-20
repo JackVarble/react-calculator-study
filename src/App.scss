@@ -35,8 +35,7 @@ body {
   padding: 2rem;
   border-radius: 10px;
 
-  .spanOne,
-  .spanTwo {
+  button {
     @include shadow;
     outline: none;
     border: none;
