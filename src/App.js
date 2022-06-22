@@ -49,7 +49,7 @@ const reducer = (state, { type, payload }) => {
           operation: payload.operation,
           previousEntry: state.currentEntry,
           currentEntry: null,
-          allClear: false,
+          allClear: true,
         };
       }
       return {
@@ -76,16 +76,16 @@ const reducer = (state, { type, payload }) => {
         operation: null,
       };
     case ACTIONS.CLEAR:
-      if (!state.allClear) {
-        return {
-          ...state,
-          currentEntry: null,
-          previousEntry: state.previousEntry,
-          operation: state.operation,
-          allClear: true,
-        };
+      if (state.allClear) {
+        return {};
       }
-      return {};
+      return {
+        ...state,
+        currentEntry: null,
+        previousEntry: state.previousEntry,
+        operation: state.operation,
+        allClear: true,
+      };
     case ACTIONS.DELETE:
       if (state.overwrite) {
         return {
@@ -115,7 +115,7 @@ const evaluate = ({ currentEntry, previousEntry, operation }) => {
   if (isNaN(current) || isNaN(prev)) return "";
   let computation = "";
   switch (operation) {
-    case "÷":
+    case "/":
       computation = prev / current;
       break;
     case "-":
@@ -150,6 +150,27 @@ const App = () => {
 
   const [drkMode, setDrkMode] = useState(false);
 
+  useEffect(() => {
+    function listener(e) {
+      if (e.key.toLowerCase() === "enter") {
+        dispatch({ type: ACTIONS.EQUALS });
+      }
+      if (e.key.toLowerCase() === "c") {
+        dispatch({ type: ACTIONS.CLEAR });
+      }
+      if (
+        e.key.toLowerCase() === "backspace" ||
+        e.key.toLowerCase() === "delete"
+      ) {
+        dispatch({ type: ACTIONS.DELETE });
+      }
+    }
+    document.addEventListener("keydown", listener);
+    return () => {
+      document.removeEventListener("keydown", listener);
+    };
+  }, []);
+
   const drkModeHandler = () => {
     setDrkMode(true);
   };
@@ -161,10 +182,7 @@ const App = () => {
   const colorChange = drkMode ? "everything-dark" : "everything-light";
 
   return (
-    <div
-      className={drkMode ? "bodyDark" : "bodyLight"}
-      onKeyDown={lightModeHandler}
-    >
+    <div className={drkMode ? "bodyDark" : "bodyLight"}>
       <main className={colorChange}>
         <div className="container">
           <div className="output">
@@ -185,7 +203,7 @@ const App = () => {
           >
             DEL
           </button>
-          <OperatorBtn operation="÷" dispatch={dispatch} className="color" />
+          <OperatorBtn operation="/" dispatch={dispatch} className="color" />
           <DigitBtn digit="1" dispatch={dispatch} />
           <DigitBtn digit="2" dispatch={dispatch} />
           <DigitBtn digit="3" dispatch={dispatch} />
