@@ -23,10 +23,12 @@ const reducer = (state, { type, payload }) => {
           overwrite: false,
         };
       }
-      if (payload.digit === "0" && state.currentEntry === "0") return state;
-      if (payload.digit === "." && state.currentEntry == null) return state;
+      if (payload.digit === "0" && state.currentEntry === "0")
+        return { ...state, overwrite: false };
+      if (payload.digit === "." && state.currentEntry == null)
+        return { ...state, overwrite: false };
       if (payload.digit === "." && state.currentEntry.includes("."))
-        return state;
+        return { ...state, overwrite: false };
       return {
         ...state,
         currentEntry: `${state.currentEntry || ""}${payload.digit}`,
@@ -169,7 +171,7 @@ const App = () => {
     return () => {
       document.removeEventListener("keydown", listener);
     };
-  }, []);
+  }, [ACTIONS]);
 
   const drkModeHandler = () => {
     setDrkMode(true);
